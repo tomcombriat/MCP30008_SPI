@@ -6,6 +6,7 @@
   ported from Python code originaly written by Adafruit learning system for rPI 
 */
 
+#include<SPI.h>
 #include "MCP3008_SPI.h"
 
 MCP3008_SPI::MCP3008_SPI(int cspin)
@@ -15,6 +16,7 @@ MCP3008_SPI::MCP3008_SPI(int cspin)
   SPI.begin();
   SPI.setBitOrder(MSBFIRST);
   SPI.setDataMode(SPI_MODE0);
+  delay(20);  // for pinMode to take action
 }
 
 
@@ -27,5 +29,5 @@ int MCP3008_SPI::readADC(byte channel)
   byte result1 = SPI.transfer(commandout);
   int result2 = SPI.transfer16(0x00);
   digitalWrite(_cspin, HIGH);
-  return result2 >>6; 
+  return (result2 >>6); 
 }
